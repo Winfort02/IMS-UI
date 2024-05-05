@@ -1,0 +1,24 @@
+<app-common-header
+  title="user list"
+  [hasActionButton]="true"
+  buttonLabel="Add"
+  buttonIcon="pi pi-plus"
+  (actionButtonClick)="showUserDetailComponent()"
+  archiveUrl="/application/users/archive"
+  [hasnavigationButton]="true"
+  archiveButtonLabel="Archive"
+  (searchAction)="search($event)"
+  [hasSearchInput]="true"
+></app-common-header>
+<app-common-table
+  [cols]="cols"
+  [data]="users"
+  [loading]="isLoading"
+  [actionButton]="actionButton"
+  (actionButtonClick)="onClickActionButton($event)"
+  (paginatePage)="onPaginate($event)"
+  [hasPagination]="true"
+  (pageChanged)="onSelectPage($event)"
+  (maxRowChange)="onSelectRowSize($event)"
+  [pagination]="pagination"
+/>

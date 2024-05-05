@@ -1,0 +1,25 @@
+<app-top-bar
+  (menuButtonClick)="onMenuButtonClick()"
+  title="INVENTORY MANAGEMENT SYSTEM"
+></app-top-bar>
+<div class="layout-wrapper">
+  <app-sidebar
+    [active]="menuActive"
+    (menuItemClick)="onMenuItemClick()"
+  ></app-sidebar>
+  <div
+    class="layout-mask"
+    [ngClass]="{ 'layout-mask-active': menuActive }"
+    (click)="onMaskClick()"
+  ></div>
+  <div class="layout-content" style="padding-bottom: 6rem">
+    <div *ngIf="items.length > 0 ? true : false" class="p-2">
+      <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+    </div>
+    <router-outlet></router-outlet>
+    <app-footer
+      title="INVENTORY MANAGEMENT SYSTEM | V2"
+      class="xs:block sm:block md:block lg:block xl:hidden"
+    ></app-footer>
+  </div>
+</div>

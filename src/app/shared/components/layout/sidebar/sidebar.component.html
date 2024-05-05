@@ -1,0 +1,28 @@
+<div class="layout-sidebar" [ngClass]="{ active: active }">
+  <div class="layout-menu">
+    <div
+      class="logo flex flex-column justify-content-center aling-items-center gap-3"
+    >
+      <div
+        class="flex justify-content-center align-items-center bg-teal-800 h-5rem border-none border-circle w-5rem"
+      >
+        <p class="m-auto text-white font-bold text-xl uppercase">
+          {{ getAcroName() }}
+        </p>
+      </div>
+      <span
+        class="text-sm uppercase text-center text-black-500 font-bold"
+        style="letter-spacing: 1.5px"
+      >
+        {{ loginUser.username }}
+      </span>
+      <span class="surface-200 w-full h-1rem"></span>
+    </div>
+    <p-panelMenu
+      [transitionOptions]="'0ms'"
+      [multiple]="false"
+      [model]="sideItems"
+      [style]="{ width: '95%', margin: 'auto', 'border-radius': 'none' }"
+    ></p-panelMenu>
+  </div>
+</div>

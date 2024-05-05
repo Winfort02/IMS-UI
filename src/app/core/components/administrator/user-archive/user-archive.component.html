@@ -1,0 +1,19 @@
+<app-common-header
+  title="archive users"
+  [hasActionButton]="false"
+  archiveUrl="/application/users"
+  archiveButtonLabel="Back"
+  [hasnavigationButton]="true"
+/>
+<app-common-table
+  [cols]="cols"
+  [data]="users"
+  [loading]="isLoading"
+  [actionButton]="actionButton"
+  (actionButtonClick)="onClickActionButton($event)"
+  [hasPagination]="true"
+  [pagination]="pagination"
+  (pageChanged)="onSelectPage($event)"
+  (maxRowChange)="onSelectRowSize($event)"
+  (paginatePage)="onPaginate($event)"
+/>
