@@ -5,6 +5,7 @@ import { AdminComponent } from '../../components/administrator/admin/admin.compo
 import { ApplicationGuard } from '../../guards/application.guard';
 import { UserComponent } from '../../components/administrator/user/user.component';
 import { UserArchiveComponent } from '../../components/administrator/user-archive/user-archive.component';
+import { ProfileComponent } from 'src/app/shared/components/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'dashboard', component: AdminComponent },
       { path: 'users', component: UserComponent },
       { path: 'users/archive', component: UserArchiveComponent },
+      { path: 'users/profile/:id', component: ProfileComponent },
     ],
   },
 ];
