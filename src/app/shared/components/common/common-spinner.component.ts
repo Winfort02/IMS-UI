@@ -7,9 +7,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   selector: 'app-common-spinner',
   imports: [CommonModule, NgxSpinnerModule],
   template: ` <ngx-spinner
-    bdColor="#fff"
+    bdColor="#172647"
     size="medium"
-    color="rgba(0, 0, 0, 0.8)"
+    color="rgba(255, 255, 255, 1)"
     type="ball-clip-rotate-multiple"
   >
     <p class="text-xl text-700 font-bold">Processing ...</p>

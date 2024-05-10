@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/core/models/user.model';
 import { ToastMessageService } from 'src/app/core/services/toast-message.service';
 import { UserService } from 'src/app/core/services/user.service';
@@ -11,7 +11,10 @@ import {
 } from 'src/app/core/helpers/table.helper';
 import { ConfirmationService } from 'primeng/api';
 import { PaginationModel } from 'src/app/core/models/pagination.model';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { Pagination } from 'src/app/core/enum/pagination.enum';
+import { ActionButtonType } from 'src/app/core/enum/action-button.enum';
+import { CONFIRMATION_MESSAGE } from 'src/app/core/constant/confirmation-message.constant';
 
 @Component({
   selector: 'app-user',
@@ -23,40 +26,40 @@ export class UserComponent implements OnInit, OnDestroy {
   actionButton = CreateUserActionButton();
   isLoading: boolean = true;
   userSubscription!: Subscription;
+  searchSubscription!: Subscription;
   users: UserModel[] = [];
   userModel: UserModel = new UserModel();
   dialogRef: DynamicDialogRef | undefined;
   pagination = new PaginationModel();
-  pageSize: number = 25;
+  pageSize: number | undefined;
   keywords: string = '';
-  searchSubject = new Subject<string>();
 
   constructor(
     private _userService: UserService,
     private _toastService: ToastMessageService,
     private _dynamicDialogService: DialogService,
-    private _confrimService: ConfirmationService
+    private _confrimService: ConfirmationService,
+    private _commonService: CommonService
   ) {}
 
   ngOnInit(): void {
-    this.onInitDebounceSearch();
+    this.searchSubscription = this._commonService
+      .onInitSearchSubject()
+      .subscribe((data) => {
+        console.log(data);
+        this.getAllusers(this.pagination.firstPage, this.pageSize);
+      });
   }
 
   ngOnDestroy(): void {
+    this._commonService.onCloseSearchSubscription();
     if (this.userSubscription) this.userSubscription.unsubscribe();
-  }
-
-  onInitDebounceSearch() {
-    this.searchSubject
-      .pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe(() => {
-        this.getAllusers(this.pagination.currentPage, this.pageSize);
-      });
+    if (this.searchSubscription) this.searchSubscription.unsubscribe();
   }
 
   search(event: any) {
     this.keywords = event;
-    this.searchSubject.next(this.keywords);
+    this._commonService.emitSearch(this.keywords);
   }
 
   onSelectPage(event: number) {
@@ -65,17 +68,17 @@ export class UserComponent implements OnInit, OnDestroy {
 
   onSelectRowSize(event: any) {
     this.pageSize = event.row;
-    this.getAllusers(this.pagination.currentPage, this.pageSize);
+    this.getAllusers(this.pagination.firstPage, this.pageSize);
   }
 
   onPaginate(event: string) {
-    if (event === 'firstPage')
+    if (event === Pagination.first)
       this.getAllusers(this.pagination.firstPage, this.pageSize);
-    if (event === 'nextPage')
+    if (event === Pagination.next)
       this.getAllusers(this.pagination.nextPage, this.pageSize);
-    if (event === 'prevPage')
+    if (event === Pagination.prev)
       this.getAllusers(this.pagination.prevPage, this.pageSize);
-    if (event === 'lastPage')
+    if (event === Pagination.last)
       this.getAllusers(this.pagination.lastPage, this.pageSize);
   }
 
@@ -122,8 +125,9 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onClickActionButton(event: any) {
-    if (event.type === 'edit') this.showUserDetailComponent(event.data, true);
-    if (event.type === 'delete') this.archiveUser(event.data.id);
+    if (event.type === ActionButtonType.edit)
+      this.showUserDetailComponent(event.data, true);
+    if (event.type === ActionButtonType.delete) this.removeUser(event.data.id);
   }
 
   createUser(data: UserModel) {
@@ -154,10 +158,9 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
-  archiveUser(id: string) {
+  removeUser(id: string) {
     this._confrimService.confirm({
-      message:
-        'Removing this record it will store to archive list. Do you want proceed ?',
+      message: CONFIRMATION_MESSAGE.removeMessage,
       header: 'Confirm',
       icon: 'pi pi-info-circle',
       acceptIcon: 'none',
@@ -168,7 +171,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this._userService.deleteUser(id).subscribe({
           next: () => {
             this._toastService.showSuccessToast(
-              'Deleted Successfully',
+              'Remove Successfully',
               'tr-global-toast'
             );
           },

@@ -5,18 +5,12 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { PaginationModel } from 'src/app/core/models/pagination.model';
+import { CreateTableRow } from 'src/app/core/helpers/table.helper';
+import { ITableRow } from 'src/app/core/interface/table.interface';
 
 @Component({
   standalone: true,
   selector: 'app-common-table',
-  styles: [
-    `
-      .active-button {
-        background-color: red;
-        color: #ffffff;
-      }
-    `,
-  ],
   imports: [
     CommonModule,
     TableModule,
@@ -147,13 +141,8 @@ export class CommonTableComponent implements OnInit {
   @Output() pageChanged = new EventEmitter<number>();
   @Output() maxRowChange = new EventEmitter<any>();
 
-  rows = [
-    { name: '25', row: 25 },
-    { name: '50', row: 50 },
-    { name: '100', row: 100 },
-  ];
-
-  maxRow = this.rows[0];
+  rows: ITableRow[] = [];
+  maxRow!: ITableRow;
 
   onPageChange(page: number) {
     this.pageChanged.emit(page);
@@ -174,14 +163,15 @@ export class CommonTableComponent implements OnInit {
   }
 
   onActionButtonClick(data: any, type: string) {
-    const emetter = {
-      data: data,
-      type,
-    };
-    this.actionButtonClick.emit(emetter);
+    const actionButton = { data, type };
+    this.actionButtonClick.emit(actionButton);
   }
 
   ngOnInit(): void {
-    this.selectedRow();
+    if (this.hasPagination) {
+      this.rows = CreateTableRow();
+      this.maxRow = this.rows[0];
+      this.selectedRow();
+    }
   }
 }

@@ -9,6 +9,9 @@ import { PaginationModel } from 'src/app/core/models/pagination.model';
 import { UserModel } from 'src/app/core/models/user.model';
 import { ToastMessageService } from 'src/app/core/services/toast-message.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { Pagination } from 'src/app/core/enum/pagination.enum';
+import { ActionButtonType } from 'src/app/core/enum/action-button.enum';
+import { CONFIRMATION_MESSAGE } from 'src/app/core/constant/confirmation-message.constant';
 
 @Component({
   selector: 'app-user-archive',
@@ -29,9 +32,7 @@ export class UserArchiveComponent implements OnInit, OnDestroy {
     private _confrimService: ConfirmationService,
     private _toastService: ToastMessageService
   ) {}
-  ngOnInit(): void {
-    this.onSelectRowSize({ row: 25 });
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     if (this.archiveSubscription) this.archiveSubscription.unsubscribe();
@@ -47,13 +48,13 @@ export class UserArchiveComponent implements OnInit, OnDestroy {
   }
 
   onPaginate(event: string) {
-    if (event === 'firstPage')
+    if (event === Pagination.first)
       this.getArchiveUsers(this.pagination.firstPage, this.pageSize);
-    if (event === 'nextPage')
+    if (event === Pagination.next)
       this.getArchiveUsers(this.pagination.nextPage, this.pageSize);
-    if (event === 'prevPage')
+    if (event === Pagination.prev)
       this.getArchiveUsers(this.pagination.prevPage, this.pageSize);
-    if (event === 'lastPage')
+    if (event === Pagination.last)
       this.getArchiveUsers(this.pagination.lastPage, this.pageSize);
   }
 
@@ -73,13 +74,13 @@ export class UserArchiveComponent implements OnInit, OnDestroy {
   }
 
   onClickActionButton(event: any) {
-    if (event.type === 'restore') this.restoreUser(event.data);
-    if (event.type === 'delete') this.deleteUser(event.data.id);
+    if (event.type === ActionButtonType.restore) this.restoreUser(event.data);
+    if (event.type === ActionButtonType.delete) this.deleteUser(event.data.id);
   }
 
   deleteUser(id: string) {
     this._confrimService.confirm({
-      message: 'Are you sure you want to delete this record permanently ?',
+      message: CONFIRMATION_MESSAGE.deleteMessage,
       header: 'Confirm',
       icon: 'pi pi-info-circle',
       acceptIcon: 'none',

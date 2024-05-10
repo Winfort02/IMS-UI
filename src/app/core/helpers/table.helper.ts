@@ -1,5 +1,16 @@
 import { IColumn } from '../interface/table.interface';
-import { ITableActionButton } from '../interface/table.interface';
+import { ITableActionButton, ITableRow } from '../interface/table.interface';
+import {
+  ActionButtonLabel,
+  ActionButtonSeverity,
+  ActionButtonType,
+} from '../enum/action-button.enum';
+
+export const CreateTableRow = (): ITableRow[] => [
+  { name: '25', row: 25 },
+  { name: '50', row: 50 },
+  { name: '100', row: 100 },
+];
 
 export const CreateUserTableColumn = (): IColumn[] => {
   return [
@@ -13,8 +24,16 @@ export const CreateUserTableColumn = (): IColumn[] => {
 
 export const CreateUserActionButton = (): ITableActionButton[] => {
   return [
-    { label: 'Edit', severity: 'info', type: 'edit' },
-    { label: 'Remove', severity: 'danger', type: 'delete' },
+    {
+      label: ActionButtonLabel.edit,
+      severity: ActionButtonSeverity.info,
+      type: ActionButtonType.edit,
+    },
+    {
+      label: ActionButtonLabel.remove,
+      severity: ActionButtonSeverity.danger,
+      type: ActionButtonType.delete,
+    },
   ];
 };
 
@@ -30,7 +49,15 @@ export const CreateArchiveTableColumn = (): IColumn[] => {
 
 export const CreateArchiveActionButton = (): ITableActionButton[] => {
   return [
-    { label: 'Restore', severity: 'info', type: 'restore' },
-    { label: 'Delete', severity: 'danger', type: 'delete' },
+    {
+      label: ActionButtonLabel.restore,
+      severity: ActionButtonSeverity.info,
+      type: ActionButtonType.restore,
+    },
+    {
+      label: ActionButtonLabel.delete,
+      severity: ActionButtonSeverity.danger,
+      type: ActionButtonType.delete,
+    },
   ];
 };

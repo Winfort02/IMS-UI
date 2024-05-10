@@ -103,12 +103,12 @@ export class SidebarComponent implements OnInit {
     this._spinner.show();
     setTimeout(() => {
       localStorage.clear();
-      this.router.navigate(['/security/login']);
-      this._spinner.hide();
       this._toastService.showSuccessToast(
         'Session was ended successfully!',
         'tr-global-toast'
       );
+      this.router.navigate(['/security/login']);
+      this._spinner.hide();
     }, 500);
   }
 

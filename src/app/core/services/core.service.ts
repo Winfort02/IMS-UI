@@ -76,7 +76,7 @@ export class CoreService {
 
   httpError(errors: HttpErrorResponse) {
     const { error } = errors;
-    if (errors.status == 403 || errors.status === 401) {
+    if (errors.status === 401) {
       this._commonService.sessionExpire();
       return throwError(error);
     }
