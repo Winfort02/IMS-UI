@@ -1,15 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { UserModel } from 'src/app/core/models/user.model';
 
 @Component({
   standalone: true,
   selector: 'app-tab-one',
-  imports: [CommonModule, InputTextModule, ButtonModule, ReactiveFormsModule],
-  template: `<p>First Tab</p>`,
+  imports: [CommonModule],
+  template: `<div
+    class="container flex flex-column justify-content-center align-items-center"
+  >
+    <div class="col-12"><h4>Details Tab</h4></div>
+  </div>`,
 })
 export class TabOneComponent implements OnInit {
-  ngOnInit(): void {}
+  @Input() user: UserModel = new UserModel();
+  ngOnInit(): void {
+    console.log(this.user);
+  }
 }

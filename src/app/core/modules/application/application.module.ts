@@ -9,7 +9,7 @@ import { CommonHeaderComponent } from 'src/app/shared/components/common/common-h
 import { CommonTableComponent } from 'src/app/shared/components/common/common-table.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UserArchiveComponent } from '../../components/administrator/user-archive/user-archive.component';
-import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { ProfileComponent } from 'src/app/shared/components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     LayoutModule,
     CommonHeaderComponent,
     CommonTableComponent,
-    SharedComponentsModule,
+    ProfileComponent,
   ],
   providers: [DialogService],
 })

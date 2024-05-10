@@ -115,12 +115,6 @@ export class SidebarComponent implements OnInit {
   loadModules() {
     this.sideItems = [
       {
-        label: 'Forms',
-        icon: 'pi pi-file-o',
-        routerLink: '/forms',
-        command: () => this.onMenuItemClick(),
-      },
-      {
         label: 'Dashboard',
         icon: 'pi pi-microsoft',
         routerLink: '/application',

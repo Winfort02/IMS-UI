@@ -85,7 +85,7 @@ export class LayoutComponent implements OnInit {
           }
         }
         this.items.push({
-          label: str[i].length > 15 ? str[i].substring(0, 10) + '...' : str[i],
+          label: str[i].length > 15 ? str[i].substring(0, 0) + '...' : str[i],
         });
       }
 
