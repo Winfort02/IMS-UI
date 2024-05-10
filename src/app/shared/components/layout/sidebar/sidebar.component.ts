@@ -46,7 +46,6 @@ export class SidebarComponent implements OnInit {
   activeSubmenus: { [key: string]: boolean } = {};
 
   sideItems: MenuItem[] = [];
-
   scrollable = true;
 
   constructor(
@@ -116,6 +115,12 @@ export class SidebarComponent implements OnInit {
   loadModules() {
     this.sideItems = [
       {
+        label: 'Forms',
+        icon: 'pi pi-file-o',
+        routerLink: '/forms',
+        command: () => this.onMenuItemClick(),
+      },
+      {
         label: 'Dashboard',
         icon: 'pi pi-microsoft',
         routerLink: '/application',
@@ -130,6 +135,12 @@ export class SidebarComponent implements OnInit {
       {
         label: 'Settings',
         items: [
+          {
+            label: 'Profile',
+            icon: 'pi pi-user',
+            routerLink: `/application/users/profile/${this.loginUser.id}`,
+            command: () => this.onMenuItemClick(),
+          },
           {
             label: 'End Session',
             icon: 'pi pi-sign-out',

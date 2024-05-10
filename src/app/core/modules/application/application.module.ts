@@ -9,6 +9,7 @@ import { CommonHeaderComponent } from 'src/app/shared/components/common/common-h
 import { CommonTableComponent } from 'src/app/shared/components/common/common-table.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UserArchiveComponent } from '../../components/administrator/user-archive/user-archive.component';
+import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UserArchiveComponent } from '../../components/administrator/user-archiv
     LayoutModule,
     CommonHeaderComponent,
     CommonTableComponent,
+    SharedComponentsModule,
   ],
   providers: [DialogService],
 })
