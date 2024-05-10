@@ -1,1 +1,11 @@
-<p-tabMenu [model]="tabItems"></p-tabMenu>
+<app-common-header title="profile"></app-common-header>
+<div class="flex flex-column col-12 px-2 w-full">
+  <p-tabMenu
+    [model]="tabItems"
+    [activeItem]="activeItem"
+    class="w-full"
+    (activeItemChange)="activeItemChange($event)"
+  ></p-tabMenu>
+  <app-tab-one [user]="loginUser" *ngIf="showDetailsTab" />
+  <app-tab-two *ngIf="showRolesPermissionTab" />
+</div>
