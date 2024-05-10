@@ -8,3 +8,8 @@ export interface ITableActionButton {
   severity: string;
   type: string;
 }
+
+export interface ITableRow {
+  name: string;
+  row: number;
+}

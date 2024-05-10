@@ -28,12 +28,14 @@ import { InputTextModule } from 'primeng/inputtext';
           *ngIf="hasnavigationButton"
           [label]="archiveButtonLabel"
           severity="secondary"
+          size="small"
           (click)="navigateToArchiveList(archiveUrl)"
         />
         <p-button
           *ngIf="hasActionButton"
           [label]="buttonLabel"
           [icon]="buttonIcon"
+          size="small"
           (click)="onActionButtonClick()"
         />
       </div>
